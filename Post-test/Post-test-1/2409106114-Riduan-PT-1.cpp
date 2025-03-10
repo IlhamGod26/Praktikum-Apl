@@ -51,7 +51,7 @@ int main() {
     cout << "=====================================" << endl;
 
     while (true) {
-        cout << "\nMasukkan kode sandi (angka antara 101 - 99998): ";
+        cout << "\nMasukkan kode sandi (angka antara 101 - 99999): ";
         cin >> secretCode;
 
         if (secretCode < 100 || secretCode > 99999) {
