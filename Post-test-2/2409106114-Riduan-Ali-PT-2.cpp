@@ -1,0 +1,135 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string namaPengguna[3] = {"Riduan Ali"};
+    string nimPengguna[3] = {"114"};
+    int jumlahPengguna = 1;
+
+    string Barang[100][2];
+    int stok[100];
+    int jumlahBarang = 5;  
+
+    
+    string nama, nim;
+    int percobaan = 0;
+    int loginBerhasil = 0;
+
+    while (percobaan < 3 && loginBerhasil == 0) {
+        cout << "Masukkan Nama: ";
+        getline(cin, nama); 
+        cout << "Masukkan NIM: ";
+        getline(cin, nim);
+
+        cout << "Nama yang dimasukkan: '" << nama << "'\n";
+        cout << "NIM yang dimasukkan: '" << nim << "'\n";
+
+        for (int i = 0; i < jumlahPengguna; i++) {
+            if (namaPengguna[i] == nama && nimPengguna[i] == nim) {
+                loginBerhasil = 1;
+                break;
+            }
+        }
+
+        if (loginBerhasil == 0) {
+            percobaan++;
+            cout << "Nama atau NIM salah! Percobaan ke-" << percobaan << " dari 3 percobaan.\n";
+        }
+    }
+    
+    if (loginBerhasil == 0) {
+        cout << "Anda sudah mencoba 3 kali. Program berhenti." << endl;
+        return 0;
+    }
+
+    Barang[0][0] = "Lampu Projie Biru";   Barang[0][1] = "15000000";   stok[0] = 25;
+    Barang[1][0] = "Lampu Projie Ungu";   Barang[1][1] = "25000000";   stok[1] = 20;
+    Barang[2][0] = "Lampu Projie Putih";  Barang[2][1] = "20000000";   stok[2] = 15;
+    Barang[3][0] = "Lampu LED Kuning";    Barang[3][1] = "10000000";   stok[3] = 30;
+    Barang[4][0] = "Lampu LED RGB";       Barang[4][1] = "18000000";   stok[4] = 10;
+    
+    while (true) {
+        cout << "\n===== MENU UTAMA =====" << endl;
+        cout << "1. Lihat Barang" << endl;
+        cout << "2. Tambah Barang" << endl;
+        cout << "3. Ubah Barang" << endl;
+        cout << "4. Hapus Barang" << endl;
+        cout << "5. Keluar" << endl;
+        cout << "Pilih menu: ";
+        int pilihan;
+        cin >> pilihan;
+        cin.clear();
+        cin.ignore();
+
+        if (pilihan == 1) {
+            cout << "\n===== DAFTAR Barang =====" << endl;
+            if (jumlahBarang == 0) {
+                cout << "Tidak ada Barang yang tersedia.\n";
+            } else {
+                cout << "+----+--------------------------+-------+---------+\n";
+                cout << "| No | Nama Barang              | Stok  | Harga   |\n";
+                cout << "+----+--------------------------+-------+---------+\n";
+                for (int i = 0; i < jumlahBarang; i++) {
+                    cout << "| " << (i + 1) << "  | " 
+                         << Barang[i][0] << string(26 - Barang[i][0].length(), ' ') << "| "
+                         << stok[i] << string(5 - to_string(stok[i]).length(), ' ') << "| "
+                         << Barang[i][1] << string(8 - Barang[i][1].length(), ' ') << "|\n";
+                }
+                cout << "+----+--------------------------+-------+---------+\n";
+            }
+        } else if (pilihan == 2) {
+            cout << "Masukkan nama Barang: ";
+            getline(cin, Barang[jumlahBarang][0]);
+            cout << "Masukkan harga Barang: ";
+            getline(cin, Barang[jumlahBarang][1]);
+            cout << "Masukkan jumlah stok: ";
+            cin >> stok[jumlahBarang];
+            cin.ignore();
+            jumlahBarang++;
+            cout << "Barang berhasil ditambahkan!" << endl;
+        } else if (pilihan == 3) {
+            cout << "Pilih nomor Barang yang ingin diubah: ";
+            int index;
+            cin >> index;
+            cin.ignore();
+
+            if (index > 0 && index <= jumlahBarang) {
+                cout << "Masukkan nama baru Barang: ";
+                getline(cin, Barang[index - 1][0]);
+                cout << "Masukkan harga baru: ";
+                getline(cin, Barang[index - 1][1]);
+                cout << "Masukkan jumlah stok baru: ";
+                cin >> stok[index - 1];
+                cin.ignore();
+                cout << "Barang berhasil diperbarui!" << endl;
+            } else {
+                cout << "Nomor Barang tidak valid!" << endl;
+            }
+        } else if (pilihan == 4) {
+            cout << "Pilih nomor Barang yang ingin dihapus: ";
+            int index;
+            cin >> index;
+            cin.ignore();
+
+            if (index > 0 && index <= jumlahBarang) {
+                for (int i = index - 1; i < jumlahBarang - 1; i++) {
+                    Barang[i][0] = Barang[i + 1][0];
+                    Barang[i][1] = Barang[i + 1][1];
+                    stok[i] = stok[i + 1];
+                }
+                jumlahBarang--;
+                cout << "Barang berhasil dihapus!" << endl;
+            } else {
+                cout << "Nomor Barang tidak valid!" << endl;
+            }
+        } else if (pilihan == 5) {
+            cout << "Keluar dari program. Sampai jumpa!" << endl;
+            break;
+        } else {
+            cout << "Pilihan tidak valid! Silakan coba lagi." << endl;
+        }
+    }
+
+    return 0;
+}
